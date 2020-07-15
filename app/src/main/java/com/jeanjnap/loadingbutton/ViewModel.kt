@@ -14,7 +14,7 @@ class ViewModel : ViewModel(), LifecycleObserver {
 
     fun onButtonClick() {
         launchDataLoad {
-            delay(1500)
+            delay(3000)
         }
     }
 

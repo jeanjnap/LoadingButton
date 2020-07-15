@@ -11,9 +11,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var viewModel: ViewModel
-    private var buttonHeight = 0
-    private var buttonWith = 0
-    private var expanded = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

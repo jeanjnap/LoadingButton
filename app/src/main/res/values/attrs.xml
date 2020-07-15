@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CustomButton">
+    <declare-styleable name="LoadingButton">
         <attr name="buttonColor" format="color|reference" />
-        <attr name="textColor" format="color|reference" />
         <attr name="progressBarColor" format="color|reference" />
-        <attr name="textSize" format="dimension"/>
         <attr name="cornerRadius" format="dimension"/>
-        <attr name="text" format="string"/>
     </declare-styleable>
+
 </resources>
