@@ -1,5 +1,6 @@
 package com.jeanjnap.loadingbutton
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -18,6 +19,12 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.viewModel = viewModel
         lifecycle.addObserver(viewModel)
+
+        binding.button.buttonColor = Color.GRAY
+        binding.button.spinningBarWidth = 3F
+        binding.button.paddingProgress = 5F
+        binding.button.cornerRadius = resources.getDimensionPixelSize(R.dimen.eight_value)
+        binding.button.progressBarColor = Color.RED
 
         subscribeUi()
     }

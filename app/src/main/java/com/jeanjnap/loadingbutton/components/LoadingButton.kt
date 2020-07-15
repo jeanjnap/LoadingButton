@@ -12,12 +12,12 @@ class LoadingButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = DEFAULT_STYLE_ATTRIBUTE
 ) : AppCompatButton(context, attrs, defStyleAttr) {
 
-    private var buttonHeight: Int = height
-    private var buttonWith: Int = width
-    private var buttonText: CharSequence = EMPTY_TEXT
+    private var initialWidth = width
+    private var buttonText = text
     private var showProgress = false
-    var spinningBarWidth = 3F
-    var paddingProgress = 5F
+
+    var spinningBarWidth = DEFAULT_SPINNER_WIDTH
+    var paddingProgress = DEFAULT_SPINNER_PADDING
 
     var buttonColor: Int = ContextCompat.getColor(context, R.color.colorAccent)
         set(value) {
@@ -34,8 +34,7 @@ class LoadingButton @JvmOverloads constructor(
     init {
         post {
             buttonText = text
-            buttonWith = width
-            buttonHeight = height
+            initialWidth = width
         }
 
         attrs?.let { it ->
@@ -50,6 +49,10 @@ class LoadingButton @JvmOverloads constructor(
             cornerRadius = attributes.getInt(R.styleable.LoadingButton_cornerRadius, cornerRadius)
             progressBarColor =
                 attributes.getColor(R.styleable.LoadingButton_progressBarColor, progressBarColor)
+            spinningBarWidth =
+                attributes.getDimension(R.styleable.LoadingButton_spinningBarWidth, spinningBarWidth)
+            paddingProgress =
+                attributes.getDimension(R.styleable.LoadingButton_paddingProgress, paddingProgress)
 
             attributes.recycle()
         }
@@ -59,11 +62,11 @@ class LoadingButton @JvmOverloads constructor(
         startAnimation(
             ResizeAnimation(
                 this,
-                buttonHeight,
-                buttonHeight,
+                height,
+                height,
                 {
                     //Start animation
-                    setBackgroundColorWithCorner(buttonColor, buttonHeight.div(TWO_VALUE))
+                    setBackgroundColorWithCorner(buttonColor, height.div(TWO_VALUE))
                     isClickable = false
                     buttonText = text
                     text = EMPTY_TEXT
@@ -79,8 +82,8 @@ class LoadingButton @JvmOverloads constructor(
     fun revertAnimation() {
         startAnimation(ResizeAnimation(
             this,
-            buttonWith,
-            buttonHeight,
+            initialWidth,
+            height,
             {
                 //Start animation
                 showProgress = false
@@ -113,7 +116,9 @@ class LoadingButton @JvmOverloads constructor(
     companion object {
         private const val DEFAULT_STYLE_ATTRIBUTE = 0
         private const val DEFAULT_STYLE_RESOURCE = 0
-        const val EMPTY_TEXT = ""
         private const val TWO_VALUE = 2
+        private const val DEFAULT_SPINNER_WIDTH = 3F
+        private const val DEFAULT_SPINNER_PADDING = 5F
+        const val EMPTY_TEXT = ""
     }
 }

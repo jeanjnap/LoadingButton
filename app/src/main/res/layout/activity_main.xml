@@ -31,6 +31,8 @@
                 android:onClick="@{() -> viewModel.onButtonClick()}"
                 android:text="@string/app_name"
                 android:textColor="@color/white"
+                app:spinningBarWidth="@dimen/eight_value"
+                app:paddingProgress="@dimen/eight_value"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -4,6 +4,8 @@
         <attr name="buttonColor" format="color|reference" />
         <attr name="progressBarColor" format="color|reference" />
         <attr name="cornerRadius" format="dimension"/>
+        <attr name="spinningBarWidth" format="dimension"/>
+        <attr name="paddingProgress" format="dimension"/>
     </declare-styleable>
 
 </resources>
