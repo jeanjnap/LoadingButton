@@ -13,14 +13,13 @@ import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
-import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.LinearInterpolator
 
 internal class AnimatedProgressBarDrawable(
-        private val view: View,
-        private val progressWidth: Float,
-        progressColor: Int
+    private val button: LoadingButton,
+    private val progressWidth: Float,
+    progressColor: Int
 ) : Drawable(), Animatable {
 
     private val bound: RectF by lazy {
@@ -53,13 +52,13 @@ internal class AnimatedProgressBarDrawable(
     }
 
     fun applyPadding(paddingProgress: Int) = this.apply {
-        val offset = (view.width - view.height) / 2
+        val offset = (button.width - button.height) / 2
 
         val padding = Rect()
 
         val left = offset + paddingProgress + padding.bottom
-        val right = view.width - offset - paddingProgress - padding.bottom
-        val bottom = view.height - paddingProgress - padding.bottom
+        val right = button.width - offset - paddingProgress - padding.bottom
+        val bottom = button.height - paddingProgress - padding.bottom
         val top = paddingProgress + padding.top
 
         setBounds(left, top, right, bottom)
@@ -108,7 +107,7 @@ internal class AnimatedProgressBarDrawable(
                     }
 
                     if (shouldDraw) {
-                        view.invalidate()
+                        button.invalidate()
                     }
                 }
 

@@ -1,8 +1,8 @@
 package com.jeanjnap.loadingbutton
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.jeanjnap.loadingbutton.databinding.ActivityMainBinding
@@ -20,11 +20,11 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         lifecycle.addObserver(viewModel)
 
-        binding.button.buttonColor = Color.GRAY
-        binding.button.spinningBarWidth = 3F
-        binding.button.paddingProgress = 5F
+        binding.button.buttonColor = ContextCompat.getColor(this, R.color.colorAccent)
+        binding.button.spinningBarWidth = DEFAULT_SPINNER_WIDTH
+        binding.button.paddingProgress = DEFAULT_SPINNER_PADDING
         binding.button.cornerRadius = resources.getDimensionPixelSize(R.dimen.eight_value)
-        binding.button.progressBarColor = Color.RED
+        binding.button.progressBarColor = ContextCompat.getColor(this, R.color.white)
 
         subscribeUi()
     }
@@ -33,5 +33,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.loading.observe(this, Observer {
             if (it) binding.button.startAnimation() else binding.button.revertAnimation()
         })
+    }
+
+    companion object {
+        private const val DEFAULT_SPINNER_WIDTH = 3F
+        private const val DEFAULT_SPINNER_PADDING = 5F
     }
 }

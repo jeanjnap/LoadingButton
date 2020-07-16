@@ -1,19 +1,19 @@
 package com.jeanjnap.loadingbutton.components
 
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Transformation
+import androidx.appcompat.widget.AppCompatButton
 
 class ResizeAnimation(
-        private val view: View,
-        private val expectedWidth: Int = view.width,
-        private val expectedHeight: Int = view.height,
-        val doOnStart: (() -> Unit)? = null,
-        val doOnEnd: (() -> Unit)? = null
+    private val button: AppCompatButton,
+    private val expectedWidth: Int = button.width,
+    private val expectedHeight: Int = button.height,
+    val doOnStart: (() -> Unit)? = null,
+    val doOnEnd: (() -> Unit)? = null
 ) : Animation() {
 
-    private val initialWidth: Int = view.width
-    private val initialHeight: Int = view.height
+    private val initialWidth: Int = button.width
+    private val initialHeight: Int = button.height
 
     init {
         duration = DURATION
@@ -33,9 +33,9 @@ class ResizeAnimation(
     }
 
     override fun applyTransformation(interpolatedTime: Float, transformation: Transformation) {
-        view.layoutParams.width = (initialWidth + (expectedWidth - initialWidth) * interpolatedTime).toInt()
-        view.layoutParams.height = (initialHeight + (expectedHeight - initialHeight) * interpolatedTime).toInt()
-        view.requestLayout()
+        button.layoutParams.width = (initialWidth + (expectedWidth - initialWidth) * interpolatedTime).toInt()
+        button.layoutParams.height = (initialHeight + (expectedHeight - initialHeight) * interpolatedTime).toInt()
+        button.requestLayout()
     }
 
     companion object {

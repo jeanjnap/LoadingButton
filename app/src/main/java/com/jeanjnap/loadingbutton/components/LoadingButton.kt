@@ -15,18 +15,19 @@ class LoadingButton @JvmOverloads constructor(
     private var initialWidth = width
     private var buttonText = text
     private var showProgress = false
+    private var runningAnimation = false
 
     var spinningBarWidth = DEFAULT_SPINNER_WIDTH
     var paddingProgress = DEFAULT_SPINNER_PADDING
 
     var buttonColor: Int = ContextCompat.getColor(context, R.color.colorAccent)
         set(value) {
-            setBackgroundColorWithCorner(value, cornerRadius)
+            if (!runningAnimation) setBackgroundColorWithCorner(value, cornerRadius)
             field = value
         }
     var cornerRadius: Int = context.resources.getDimensionPixelSize(R.dimen.eight_value)
         set(value) {
-            setBackgroundColorWithCorner(buttonColor, value)
+            if (!runningAnimation) setBackgroundColorWithCorner(buttonColor, value)
             field = value
         }
     var progressBarColor: Int = ContextCompat.getColor(context, R.color.white)
@@ -50,7 +51,10 @@ class LoadingButton @JvmOverloads constructor(
             progressBarColor =
                 attributes.getColor(R.styleable.LoadingButton_progressBarColor, progressBarColor)
             spinningBarWidth =
-                attributes.getDimension(R.styleable.LoadingButton_spinningBarWidth, spinningBarWidth)
+                attributes.getDimension(
+                    R.styleable.LoadingButton_spinningBarWidth,
+                    spinningBarWidth
+                )
             paddingProgress =
                 attributes.getDimension(R.styleable.LoadingButton_paddingProgress, paddingProgress)
 
@@ -61,18 +65,18 @@ class LoadingButton @JvmOverloads constructor(
     fun startAnimation() {
         startAnimation(
             ResizeAnimation(
-                this,
-                height,
-                height,
-                {
-                    //Start animation
+                button = this,
+                expectedWidth = height,
+                expectedHeight = height,
+                doOnStart = {
+                    runningAnimation = true
                     setBackgroundColorWithCorner(buttonColor, height.div(TWO_VALUE))
                     isClickable = false
                     buttonText = text
                     text = EMPTY_TEXT
                 },
-                {
-                    //End animation
+                doOnEnd = {
+                    runningAnimation = false
                     showProgress = true
                 }
             )
@@ -81,15 +85,15 @@ class LoadingButton @JvmOverloads constructor(
 
     fun revertAnimation() {
         startAnimation(ResizeAnimation(
-            this,
-            initialWidth,
-            height,
-            {
-                //Start animation
+            button = this,
+            expectedHeight = height,
+            expectedWidth = initialWidth,
+            doOnStart = {
+                runningAnimation = true
                 showProgress = false
             },
-            {
-                //End animation
+            doOnEnd = {
+                runningAnimation = false
                 isClickable = true
                 text = buttonText
                 setBackgroundColorWithCorner(buttonColor, cornerRadius)
